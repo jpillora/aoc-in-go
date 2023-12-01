@@ -9,7 +9,7 @@ Advent of Code (https://adventofcode.com) is a yearly series of programming ques
 * Structured questions into `<year>/<day>`
 * Auto-download questions into `<year>/<day>/README.md`
 * Auto-download example input into `<year>/<day>/input-example.txt`
-* With `AOC_SESSION` set
+* With env variable `AOC_SESSION` set:
    * Auto-download part 2 of questions into `<year>/<day>/README.md`
    * Auto-download user input into `<year>/<day>/input-user.md`
 * When you save `code.go`, it will execute your `run` function 4 times:
@@ -53,7 +53,7 @@ Advent of Code (https://adventofcode.com) is a yearly series of programming ques
 
 #### Session
 
-**Optionally**, you can set `AOC_SESSION` to your adventofcode.com `session` cookie. That is:
+**Optionally**, you can set `export AOC_SESSION=<session>` to your adventofcode.com `session` cookie. That is:
 
 * Login with your browser
 * Open developer tools > Application/Storage > Cookies
