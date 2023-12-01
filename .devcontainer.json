@@ -1,0 +1,11 @@
+{
+  "image": "mcr.microsoft.com/devcontainers/go",
+  "customizations": {
+    "codespaces": {
+      "extensions": ["golang.go"]
+    },
+    "vscode": {
+      "extensions": ["golang.go"]
+    }
+  }
+}
