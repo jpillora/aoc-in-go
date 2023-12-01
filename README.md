@@ -33,10 +33,10 @@ Advent of Code (https://adventofcode.com) is a yearly series of programming ques
       * Open in VS Code, and install the Go extension
    * Codespaces
       * Click "Open in Codespaces"
-1. Open a terminal and `./run.sh <year> <day>`:
+1. Open a terminal and `./run.sh <year> <day>` like this:
 
    ```sh
-   ./run.sh 2022 1
+   $ ./run.sh 2023 1
    [run.sh] created ./2023/01
    [run.sh] created ./2023/01/code.go
    Created file README.md
@@ -56,10 +56,10 @@ Advent of Code (https://adventofcode.com) is a yearly series of programming ques
 
 1. The question is downloaded to `./2023/01/README.md`
 1. Login to https://adventofcode.com
-1. Find your question, save your input file to `./2023/01/input-user.txt`
+1. Find your question (e.g. https://adventofcode.com/2023/day/1) and **get your puzzle input** and save it to `./2023/01/input-user.txt`
    * See **Session** below to automate this step 
 1. Iterate on `code.go` until you get the answer
-1. Submit to https://adventofcode.com
+1. Submit it to https://adventofcode.com/2023/day/1
 
 ---
 
