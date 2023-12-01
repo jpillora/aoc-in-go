@@ -2,7 +2,7 @@
 
 A handy template repository to hold your [Advent of Code](https://adventofcode.com) solutions in Go.
 
-[Advent of Code](https://adventofcode.com) is a yearly series of programming questions based on the [Advent Calendar](https://en.wikipedia.org/wiki/Advent_calendar). For each day leading up to christmas, there is one question released, and from the second it is released, there is a timer running and a leaderboard showing who solved it first.
+Advent of Code (https://adventofcode.com) is a yearly series of programming questions based on the [Advent Calendar](https://en.wikipedia.org/wiki/Advent_calendar). For each day leading up to christmas, there is one question released, and from the second it is released, there is a timer running and a leaderboard showing who solved it first.
 
 ### Features
 
@@ -29,10 +29,9 @@ A handy template repository to hold your [Advent of Code](https://adventofcode.c
       * Open in VS Code, and install the Go extension
    * Codespaces
       * Click "Open in Codespaces"
-* Open a terminal and:
+* Open a terminal and `./run.sh <year> <day>`:
 
    ```sh
-   # use 2022/01 or choose another <year>/<day> question
    ./run.sh 2022 1
    [run.sh] created ./2022/01
    [run.sh] created ./2022/01/code.go
@@ -41,9 +40,9 @@ A handy template repository to hold your [Advent of Code](https://adventofcode.c
    run(part1, input-example) returned in 616µs => 42
    ```
 
-* Update `/2022/01/code.go` to `return 43` instead you should see
+* Update `./2022/01/code.go` to `return 43` instead you should see
 
-   ```
+   ```sh
    file changed code.go
    run(part1, input-example) returned in 34µs => 43
    ```
