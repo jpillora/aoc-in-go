@@ -56,7 +56,7 @@ Advent of Code (https://adventofcode.com) is a yearly series of programming ques
 
 1. The question is downloaded to `./2023/01/README.md`
 1. Login to https://adventofcode.com
-1. Find your question (e.g. https://adventofcode.com/2023/day/1) and **get your puzzle input** and save it to `./2023/01/input-user.txt`
+1. Find your question (e.g. https://adventofcode.com/2023/day/1) and **[get your puzzle input](https://adventofcode.com/2023/day/1/input)** and save it to `./2023/01/input-user.txt`
    * See **Session** below to automate this step 
 1. Iterate on `code.go` until you get the answer
 1. Submit it to https://adventofcode.com/2023/day/1
