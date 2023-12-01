@@ -40,7 +40,10 @@ Advent of Code (https://adventofcode.com) is a yearly series of programming ques
    run(part1, input-example) returned in 616µs => 42
    ```
 
-* Update `./2022/01/code.go` to `return 43` instead you should see
+* Implement your solution in `./2022/01/code.go` inside the `run` function
+   * I have provided solutions for year `2022`, days `2`,`4`,`7` – however you can delete them and do them yourself if you'd like
+* Changes will re-run the code
+   * For example, `update` `return 43` instead you should see
 
    ```sh
    file changed code.go
