@@ -4,9 +4,11 @@ A handy template repository to hold your [Advent of Code](https://adventofcode.c
 
 Advent of Code (https://adventofcode.com) is a yearly series of programming questions based on the [Advent Calendar](https://en.wikipedia.org/wiki/Advent_calendar). For each day leading up to christmas, there is one question released, and from the second it is released, there is a timer running and a leaderboard showing who solved it first.
 
+---
+
 ### Features
 
-* Structured questions into `<year>/<day>`
+* A directory per question `<year>/<day>`
 * Auto-download questions into `<year>/<day>/README.md`
 * Auto-download example input into `<year>/<day>/input-example.txt`
 * With env variable `AOC_SESSION` set:
@@ -19,40 +21,47 @@ Advent of Code (https://adventofcode.com) is a yearly series of programming ques
    * Input `input-user.txt` and `part2=true`
    * and, will show the results and timing of each
 
+---
+
 ### Usage
 
-* Click "Use this template" above to fork it into your account
-* Setup repo, either locally or in codespaces
+1. Click "**Use this template**" above to fork it into your account
+1. Setup repo, either locally or in codespaces
    * Locally
       * Install Go from https://go.dev/dl/ or from brew, etc
       * Git clone your fork
       * Open in VS Code, and install the Go extension
    * Codespaces
       * Click "Open in Codespaces"
-* Open a terminal and `./run.sh <year> <day>`:
+1. Open a terminal and `./run.sh <year> <day>`:
 
    ```sh
    ./run.sh 2022 1
-   [run.sh] created ./2022/01
-   [run.sh] created ./2022/01/code.go
+   [run.sh] created ./2023/01
+   [run.sh] created ./2023/01/code.go
    Created file README.md
    Created file input-example.txt
    run(part1, input-example) returned in 616µs => 42
    ```
 
-* Implement your solution in `./2022/01/code.go` inside the `run` function
+1. Implement your solution in `./2023/01/code.go` inside the `run` function
    * I have provided solutions for year `2022`, days `2`,`4`,`7` – however you can delete them and do them yourself if you'd like
-* Changes will re-run the code
-   * For example, `update` `return 43` instead you should see
+1. Changes will re-run the code
+   * For example, update `code.go` to `return 43` instead you should see:
 
    ```sh
    file changed code.go
    run(part1, input-example) returned in 34µs => 43
    ```
 
-* The question is downloadded to `README.md`, iterate on `code.go` until you get the answer
-* Login to https://adventofcode.com and submit
+1. The question is downloaded to `./2023/01/README.md`
+1. Login to https://adventofcode.com
+1. Find your question, save your input file to `./2023/01/input-user.txt`
+   * See **Session** below to automate this step 
+1. Iterate on `code.go` until you get the answer
+1. Submit to https://adventofcode.com
 
+---
 
 #### Session
 
@@ -63,6 +72,6 @@ Advent of Code (https://adventofcode.com) is a yearly series of programming ques
 * Retrieve the contents of `session`
 * Export it as `AOC_SESSION`
 
-With your session, `puzzler` will download your user-specifc `input-user.txt` and also update `README.md` with part 2 of the question once you've completed part 1.
+With your session set, running `code.go` will download your user-specifc `input-user.txt` and also update `README.md` with part 2 of the question once you've completed part 1.
 
-Current, your session is NOT used to submit your answer. You still need to login to https://adventofcode.com to submit.
+Currently, your session is NOT used to submit your answer. You still need to login to https://adventofcode.com to submit.
