@@ -37,8 +37,8 @@ Advent of Code (https://adventofcode.com) is a yearly series of programming ques
 
    ```sh
    $ ./run.sh 2023 1
-   [run.sh] created ./2023/01
-   [run.sh] created ./2023/01/code.go
+   Created directory ./2023/01
+   Created file code.go
    Created file README.md
    Created file input-example.txt
    run(part1, input-example) returned in 616µs => 42
@@ -65,7 +65,7 @@ Advent of Code (https://adventofcode.com) is a yearly series of programming ques
 
 #### Session
 
-**Optionally**, you can set `export AOC_SESSION=<session>` to your adventofcode.com `session` cookie. That is:
+**Optionally**, you can `export AOC_SESSION=<session>` from your adventofcode.com `session` cookie. That is:
 
 * Login with your browser
 * Open developer tools > Application/Storage > Cookies
