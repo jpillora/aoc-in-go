@@ -16,10 +16,14 @@ Advent of Code (https://adventofcode.com) is a yearly series of programming ques
    * Auto-download user input into `<year>/<day>/input-user.md`
 * When you save `code.go`, it will execute your `run` function 4 times:
    * Input `input-example.txt` and `part2=false`
-   * Input `input-example.txt` and `part2=true`
+   * Input `input-example(2).txt` and `part2=true`
    * Input `input-user.txt` and `part2=false`
-   * Input `input-user.txt` and `part2=true`
-   * and, will show the results and timing of each
+   * Input `input-user(2).txt` and `part2=true`
+   * Each run will display the return value and timing.
+   * Part 2 will use the `<file>2.txt` if it exists.
+* Force execution of a specific:
+   * Part with `PART=<N> ./run.sh <year> <day>` where `N` can be `1` or `2`
+   * Input with `INPUT=<INPUT> ./run.sh <year> <day>` where `INPUT` can be `example` or `user`
 
 ---
 
