@@ -2,9 +2,9 @@ module aoc-in-go
 
 go 1.21.3
 
-replace github.com/jpillora/puzzler => ../puzzler
+// replace github.com/jpillora/puzzler => ../puzzler
 
-require github.com/jpillora/puzzler v1.3.1
+require github.com/jpillora/puzzler v1.3.3
 
 require (
 	github.com/JohannesKaufmann/html-to-markdown v1.4.2 // indirect
