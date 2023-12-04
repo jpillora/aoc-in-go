@@ -30,32 +30,23 @@ var maxCubes = map[string]int{
 }
 
 func validGameID(line string) int {
-	idGames := strings.SplitN(line, ":", 2)
-	id, games := idGames[0], idGames[1]
+	id, nc := parseGame(line)
 	g := atoi(strings.TrimPrefix(id, "Game "))
-	for _, game := range strings.Split(games, ";") {
-		for _, cube := range strings.Split(game, ",") {
-			numColor := strings.SplitN(strings.TrimSpace(cube), " ", 2)
-			num, color := atoi(numColor[0]), numColor[1]
-			if num > maxCubes[color] {
-				return 0 // impossible
-			}
+	for _, nc := range nc {
+		if nc.num > maxCubes[nc.color] {
+			return 0 // impossible
 		}
 	}
 	return g
 }
 
 func powerGame(line string) int {
-	idGames := strings.SplitN(line, ":", 2)
-	max := map[string]int{"red": 0, "green": 0, "blue": 0}
+	_, nc := parseGame(line)
 	// build max values of each color for this game
-	for _, game := range strings.Split(idGames[1], ";") {
-		for _, cube := range strings.Split(game, ",") {
-			numColor := strings.SplitN(strings.TrimSpace(cube), " ", 2)
-			num, color := atoi(numColor[0]), numColor[1]
-			if num > max[color] {
-				max[color] = num
-			}
+	max := map[string]int{"red": 0, "green": 0, "blue": 0}
+	for _, nc := range nc {
+		if nc.num > max[nc.color] {
+			max[nc.color] = nc.num
 		}
 	}
 	mul := 1
@@ -63,6 +54,24 @@ func powerGame(line string) int {
 		mul *= num
 	}
 	return mul
+}
+
+type numColor struct {
+	num   int
+	color string
+}
+
+func parseGame(line string) (id string, nc []numColor) {
+	idGames := strings.SplitN(line, ":", 2)
+	id = idGames[0]
+	for _, game := range strings.Split(idGames[1], ";") {
+		for _, cube := range strings.Split(game, ",") {
+			pair := strings.SplitN(strings.TrimSpace(cube), " ", 2)
+			num, color := atoi(pair[0]), pair[1]
+			nc = append(nc, numColor{num, color})
+		}
+	}
+	return
 }
 
 func atoi(s string) int {
