@@ -20,7 +20,21 @@ func run(part2 bool, input string) any {
 	for _, line := range strings.Split(input, "\n") {
 		rows = append(rows, []rune(line))
 	}
-	sum := int64(0)
+
+	if part2 {
+		return sumGearRatios(rows)
+	}
+	return sumSymbolNumbers(rows)
+}
+
+func sumGearRatios(rows [][]rune) int {
+	sum := 0
+
+	return sum
+}
+
+func sumSymbolNumbers(rows [][]rune) int {
+	sum := 0
 	for r, row := range rows {
 		num := ""
 		for c, col := range row {
@@ -32,12 +46,12 @@ func run(part2 bool, input string) any {
 				continue
 			}
 			if symbolAround(r, c-1, num, rows) {
-				sum += int64(atoi(num))
+				sum += atoi(num)
 			}
 			num = ""
 		}
 		if num != "" && symbolAround(r, len(row)-1, num, rows) {
-			sum += int64(atoi(num))
+			sum += atoi(num)
 		}
 	}
 	return sum
