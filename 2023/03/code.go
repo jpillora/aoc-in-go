@@ -12,30 +12,40 @@ func main() {
 }
 
 func run(part2 bool, input string) any {
-	// when you're ready to do part 2, remove this "not implemented" block
-	if part2 {
-		return "not implemented"
-	}
-	rows := [][]rune{}
+	runes := [][]rune{}
 	for _, line := range strings.Split(input, "\n") {
-		rows = append(rows, []rune(line))
+		runes = append(runes, []rune(line))
 	}
-
 	if part2 {
-		return sumGearRatios(rows)
+		return sumGearRatios(runes)
 	}
-	return sumSymbolNumbers(rows)
+	return sumSymbolNumbers(runes)
 }
 
-func sumGearRatios(rows [][]rune) int {
+func sumGearRatios(runes [][]rune) int {
 	sum := 0
-
+	for r, row := range runes {
+		for c, col := range row {
+			// TODO: find 2 SEPARATE numbers around r/c
+			nums := []string{}
+			if col == '*' {
+				around(r, c, string(col), runes, func(a rune) {
+					if digit(a) {
+						nums = append(nums, numAt(r, c, runes))
+					}
+				})
+			}
+			if len(nums) == 2 {
+				sum += atoi(nums[0]) * atoi(nums[1])
+			}
+		}
+	}
 	return sum
 }
 
-func sumSymbolNumbers(rows [][]rune) int {
+func sumSymbolNumbers(runes [][]rune) int {
 	sum := 0
-	for r, row := range rows {
+	for r, row := range runes {
 		num := ""
 		for c, col := range row {
 			if digit(col) {
@@ -45,23 +55,50 @@ func sumSymbolNumbers(rows [][]rune) int {
 			if num == "" {
 				continue
 			}
-			if symbolAround(r, c-1, num, rows) {
+			if symbolAround(r, c-1, num, runes) {
 				sum += atoi(num)
 			}
 			num = ""
 		}
-		if num != "" && symbolAround(r, len(row)-1, num, rows) {
+		if num != "" && symbolAround(r, len(row)-1, num, runes) {
 			sum += atoi(num)
 		}
 	}
 	return sum
 }
 
-// -......-- r,c is location of 7.
-// -.1337.-- and l(ength) is 4.
-// -......-- we want to check the dots, not the dashes.
-func symbolAround(r, c int, num string, runes [][]rune) bool {
-	l := len(num)
+func symbolAround(r, c int, target string, runes [][]rune) bool {
+	s := false
+	around(r, c, target, runes, func(r rune) {
+		if symbol(r) {
+			s = true
+		}
+	})
+	return s
+}
+
+func numAt(r, c int, runes [][]rune) string {
+	// TODO: need location of string?
+	row := runes[r]
+	num := []rune{
+		row[c],
+	}
+	// check left
+	for x := c - 1; x >= 0 && digit(row[x]); x-- {
+		num = append([]rune{row[x]}, num...)
+	}
+	// check right
+	for x := c + 1; x < len(row) && digit(row[x]); x++ {
+		num = append(num, row[x])
+	}
+	return string(num)
+}
+
+// -......-- r,c is location of the "7".
+// -.1337.-- l(ength) of target is 4.
+// -......-- we want to check around the target.
+func around(r, c int, target string, runes [][]rune, handle func(r rune)) {
+	l := len(target)
 	y0 := r - 1
 	for y := y0; y <= r+1; y++ {
 		if y < 0 || y >= len(runes) {
@@ -75,13 +112,9 @@ func symbolAround(r, c int, num string, runes [][]rune) bool {
 			if x < 0 || x >= len(runes[y]) {
 				continue
 			}
-			s := symbol(runes[y][x])
-			if s {
-				return true
-			}
+			handle(runes[y][x])
 		}
 	}
-	return false
 }
 
 func digit(r rune) bool {
