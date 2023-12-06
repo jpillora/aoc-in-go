@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"strconv"
 	"strings"
 
@@ -30,10 +31,14 @@ func sumGearRatios(runes [][]rune) int {
 			nums := []string{}
 			if col == '*' {
 				around(r, c, string(col), runes, func(a rune) {
+					fmt.Printf("star[%d,%d] -> %s\n", r, c, string(a))
 					if digit(a) {
 						nums = append(nums, numAt(r, c, runes))
 					}
 				})
+			}
+			if len(nums) > 0 {
+				fmt.Printf("star[%d,%d] nums %v\n", r, c, nums)
 			}
 			if len(nums) == 2 {
 				sum += atoi(nums[0]) * atoi(nums[1])
@@ -50,18 +55,14 @@ func sumSymbolNumbers(runes [][]rune) int {
 		for c, col := range row {
 			if digit(col) {
 				num += string(col)
-				continue
 			}
-			if num == "" {
-				continue
+			eon := digit(col) && (c == len(row)-1 || !digit(row[c+1]))
+			if eon {
+				if symbolAround(r, c, num, runes) {
+					sum += atoi(num)
+				}
+				num = ""
 			}
-			if symbolAround(r, c-1, num, runes) {
-				sum += atoi(num)
-			}
-			num = ""
-		}
-		if num != "" && symbolAround(r, len(row)-1, num, runes) {
-			sum += atoi(num)
 		}
 	}
 	return sum
