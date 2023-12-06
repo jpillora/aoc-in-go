@@ -1,7 +1,6 @@
 package main
 
 import (
-	"slices"
 	"strconv"
 	"strings"
 
@@ -24,20 +23,26 @@ func run(part2 bool, input string) any {
 }
 
 func sumGearRatios(runes [][]rune) int {
+	type loc struct{ r, c int }
 	sum := 0
 	for r, row := range runes {
 		for c, col := range row {
 			if col != '*' {
 				continue
 			}
+			seen := map[loc]bool{}
 			nums := []string{}
 			around(r, c, string(col), runes, func(x, y int, v rune) {
-				if digit(v) {
-					num := numAt(x, y, runes)
-					if !slices.Contains(nums, num) {
-						nums = append(nums, num)
-					}
+				if !digit(v) {
+					return
 				}
+				num, origin := numAt(x, y, runes)
+				l := loc{x, origin}
+				if seen[l] {
+					return
+				}
+				nums = append(nums, num)
+				seen[l] = true
 			})
 			if len(nums) == 2 {
 				sum += atoi(nums[0]) * atoi(nums[1])
@@ -52,16 +57,18 @@ func sumSymbolNumbers(runes [][]rune) int {
 	for r, row := range runes {
 		num := ""
 		for c, col := range row {
-			if digit(col) {
-				num += string(col)
+			if !digit(col) {
+				continue
 			}
-			eon := digit(col) && (c == len(row)-1 || !digit(row[c+1]))
-			if eon {
-				if symbolAround(r, c, num, runes) {
-					sum += atoi(num)
-				}
-				num = ""
+			num += string(col)
+			last := (c == len(row)-1 || !digit(row[c+1]))
+			if !last {
+				continue
 			}
+			if symbolAround(r, c, num, runes) {
+				sum += atoi(num)
+			}
+			num = ""
 		}
 	}
 	return sum
@@ -77,19 +84,20 @@ func symbolAround(r, c int, target string, runes [][]rune) bool {
 	return s
 }
 
-func numAt(r, c int, runes [][]rune) string {
+func numAt(r, c int, runes [][]rune) (number string, origin int) {
 	// TODO: need location of string?
 	row := runes[r]
-	num := []rune{
-		row[c],
-	}
-	for x := c - 1; x >= 0 && digit(row[x]); x-- {
-		num = append([]rune{row[x]}, num...) // collect left
+	num := []rune{}
+	origin = c
+	for origin >= 0 && digit(row[origin]) {
+		num = append([]rune{row[origin]}, num...) // collect left
+		origin--
 	}
 	for x := c + 1; x < len(row) && digit(row[x]); x++ {
 		num = append(num, row[x]) // collect right
+
 	}
-	return string(num)
+	return string(num), origin
 }
 
 // -......-- r,c is location of the "7".
