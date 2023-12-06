@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	"slices"
 	"strconv"
 	"strings"
 
@@ -27,19 +27,18 @@ func sumGearRatios(runes [][]rune) int {
 	sum := 0
 	for r, row := range runes {
 		for c, col := range row {
-			// TODO: find 2 SEPARATE numbers around r/c
+			if col != '*' {
+				continue
+			}
 			nums := []string{}
-			if col == '*' {
-				around(r, c, string(col), runes, func(a rune) {
-					fmt.Printf("star[%d,%d] -> %s\n", r, c, string(a))
-					if digit(a) {
-						nums = append(nums, numAt(r, c, runes))
+			around(r, c, string(col), runes, func(x, y int, v rune) {
+				if digit(v) {
+					num := numAt(x, y, runes)
+					if !slices.Contains(nums, num) {
+						nums = append(nums, num)
 					}
-				})
-			}
-			if len(nums) > 0 {
-				fmt.Printf("star[%d,%d] nums %v\n", r, c, nums)
-			}
+				}
+			})
 			if len(nums) == 2 {
 				sum += atoi(nums[0]) * atoi(nums[1])
 			}
@@ -70,7 +69,7 @@ func sumSymbolNumbers(runes [][]rune) int {
 
 func symbolAround(r, c int, target string, runes [][]rune) bool {
 	s := false
-	around(r, c, target, runes, func(r rune) {
+	around(r, c, target, runes, func(_, _ int, r rune) {
 		if symbol(r) {
 			s = true
 		}
@@ -84,13 +83,11 @@ func numAt(r, c int, runes [][]rune) string {
 	num := []rune{
 		row[c],
 	}
-	// check left
 	for x := c - 1; x >= 0 && digit(row[x]); x-- {
-		num = append([]rune{row[x]}, num...)
+		num = append([]rune{row[x]}, num...) // collect left
 	}
-	// check right
 	for x := c + 1; x < len(row) && digit(row[x]); x++ {
-		num = append(num, row[x])
+		num = append(num, row[x]) // collect right
 	}
 	return string(num)
 }
@@ -98,7 +95,7 @@ func numAt(r, c int, runes [][]rune) string {
 // -......-- r,c is location of the "7".
 // -.1337.-- l(ength) of target is 4.
 // -......-- we want to check around the target.
-func around(r, c int, target string, runes [][]rune, handle func(r rune)) {
+func around(r, c int, target string, runes [][]rune, handle func(r, c int, v rune)) {
 	l := len(target)
 	y0 := r - 1
 	for y := y0; y <= r+1; y++ {
@@ -113,7 +110,7 @@ func around(r, c int, target string, runes [][]rune, handle func(r rune)) {
 			if x < 0 || x >= len(runes[y]) {
 				continue
 			}
-			handle(runes[y][x])
+			handle(y, x, runes[y][x])
 		}
 	}
 }
