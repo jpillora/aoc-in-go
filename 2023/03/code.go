@@ -5,6 +5,7 @@ import (
 	"strings"
 
 	"github.com/jpillora/puzzler/harness/aoc"
+	"golang.org/x/exp/maps"
 )
 
 func main() {
@@ -23,29 +24,28 @@ func run(part2 bool, input string) any {
 }
 
 func sumGearRatios(runes [][]rune) int {
-	type loc struct{ r, c int }
 	sum := 0
 	for r, row := range runes {
 		for c, col := range row {
 			if col != '*' {
 				continue
 			}
-			seen := map[loc]bool{}
-			nums := []string{}
+			type loc struct{ r, c int }
+			nums := map[loc]int{}
 			around(r, c, string(col), runes, func(x, y int, v rune) {
 				if !digit(v) {
 					return
 				}
-				num, origin := numAt(x, y, runes)
-				l := loc{x, origin}
-				if seen[l] {
+				num, originy := numAt(x, y, runes)
+				l := loc{x, originy}
+				if _, ok := nums[l]; ok {
 					return
 				}
-				nums = append(nums, num)
-				seen[l] = true
+				nums[l] = atoi(num)
 			})
 			if len(nums) == 2 {
-				sum += atoi(nums[0]) * atoi(nums[1])
+				pair := maps.Values(nums)
+				sum += pair[0] * pair[1]
 			}
 		}
 	}
@@ -95,7 +95,6 @@ func numAt(r, c int, runes [][]rune) (number string, origin int) {
 	}
 	for x := c + 1; x < len(row) && digit(row[x]); x++ {
 		num = append(num, row[x]) // collect right
-
 	}
 	return string(num), origin
 }
@@ -113,7 +112,7 @@ func around(r, c int, target string, runes [][]rune, handle func(r, c int, v run
 		x0 := c - l
 		for x := x0; x <= c+1; x++ {
 			if y == y0+1 && x == x0+1 {
-				x += l
+				x += l // jump over the 1337
 			}
 			if x < 0 || x >= len(runes[y]) {
 				continue
